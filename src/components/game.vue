@@ -1,44 +1,10 @@
 <template>
   <div>
-    <div class="box">
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div @click="motion" class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-      <div class="bord">
-        <img v-if="x" class="tic" src="../assets/X.svg" alt="">
-        <img v-if="o" class="tac" src="../assets/0.svg" alt="">
-      </div>
-  
-  
+    <div class="box" key="id">
+      <cell @click="" v-for="number of numbers" 
+      :key="numbers[number - 1]"
+      :id = "numbers[number - 1]"
+      />
     </div>
     
     <!-- <div>
@@ -50,29 +16,18 @@
 </template>
 
 <script setup>
+  import cell from './cell.vue';
   import { ref } from 'vue';
 
+  const numbers = [1,2,3,4,5,6,7,8,9];
 
   let counter = ref(0);
-  const x = ref(false);
-  const o = ref(false);
+  
+  // const o = ref(false);
   const arrCount = ref([0]);
 
 
-  const motion = () => {
-    console.log('a')
-    if(x.value || o.value === true) {
-      console.log('adf');
-      return;
-    }
-
-    if (arrCount.value.length === 0 || counter.value === 0 || counter.value % 2 === 0) {
-      x.value = true;
-    }
-    if (counter.value % 2 !== 0) o.value = true;
-    counter++;
-    arrCount.value.push(counter.value);
-  }
+  
 
 </script>
 
@@ -85,12 +40,6 @@
     grid-template-columns: 1fr 1fr 1fr;
 
   }
-  .bord {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 1px solid black;
-    cursor: pointer;
-  }
+  
 
 </style>
