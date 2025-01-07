@@ -1,9 +1,15 @@
 <template>
   <div>
     <div class="box" key="id">
-      <cell @click="" v-for="number of numbers" 
+      <cell @cellId="getId" v-for="number of numbers" 
       :key="numbers[number - 1]"
       :id = "numbers[number - 1]"
+      :path = "(() => {
+        if(id === reloadId.value) {
+          return true;
+        }
+        else return false;
+      }) ? (flag ? '/X.svg' : '/O.svg') : ('/white.jpg')"
       />
     </div>
     
@@ -17,14 +23,53 @@
 
 <script setup>
   import cell from './cell.vue';
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
+  import { useStore } from 'vuex';
+
+  const store = useStore();
+  const flag = store.state.flag;
+  const reloadId = ref(0)
+
+  function getId(id) {
+    reloadId.value = id;
+    console.log(id)
+  }
 
   const numbers = [1,2,3,4,5,6,7,8,9];
 
+  const positions =  {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
+      7: 0,
+      8: 0,
+      9: 0,
+    }
+
+  // const xOrO = () => {
+  //   if(store.state.cells[] === 0) {
+  //     return false;
+  //   }
+  //   if (store.state.cells[] === 1) {
+  //     return '/X.svg';
+  //   }
+
+  //   if (store.state.cells[] === 2) {
+  //     return '/O.svg';
+  //   }
+  //   else return false;
+    
+  // }
+
   let counter = ref(0);
-  
-  // const o = ref(false);
+
   const arrCount = ref([0]);
+  function getFlag () {
+    store.commit('reFlag')
+  }
 
 
   
