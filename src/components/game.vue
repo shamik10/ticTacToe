@@ -1,85 +1,127 @@
 <template>
-  <div>
-    <div class="box" key="id">
-      <cell @cellId="getId" v-for="number of numbers" 
-      :key="numbers[number - 1]"
-      :id = "numbers[number - 1]"
-      :path = "(() => {
-        if(id === reloadId.value) {
-          return true;
-        }
-        else return false;
-      }) ? (flag ? '/X.svg' : '/O.svg') : ('/white.jpg')"
-      />
+  <div class="main">
+    <div class="players-name">
+      <div class="players-name__block">
+        <span class="players"> игрок1:</span> 
+        <input v-model="names.player1" class="players-name__input" type="text">
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="players-name__block">
+        <span class="players"> игрок2:</span> 
+        <input v-model="names.player2" class="players-name__input" type="text">
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
     </div>
-    
-    <!-- <div>
-      <input type="text">
-      <input type="text">
-      <button>начать</button>
-    </div> -->
+    <div class="box">
+      <div class="cell" key="id">
+        <cell @click="getId"  v-for="number of Object.keys(cells)" 
+        :key="+number"
+        :id = "+number"
+        :value="cells[number]"
+        :players="names"
+        />
+      </div>
+      <div class="update-btn">
+        <button @click="updateTable">обновить таблицу</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
   import cell from './cell.vue';
-  import { ref, computed } from 'vue';
+  import { ref, computed, reactive, watch, onMounted } from 'vue';
   import { useStore } from 'vuex';
 
+ 
+
+  const x = ref([]);
+  const o = ref([]);
+
+  const names = reactive({
+    player1: '',
+    player2: ''
+  });
   const store = useStore();
-  const flag = store.state.flag;
-  const reloadId = ref(0)
+  const cells = computed(() => store.state.cells);
+  
+
+
 
   function getId(id) {
-    reloadId.value = id;
-    console.log(id)
-  }
-
-  const numbers = [1,2,3,4,5,6,7,8,9];
-
-  const positions =  {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-      6: 0,
-      7: 0,
-      8: 0,
-      9: 0,
+    console.log(id);
+    if (cells.value[id]) {
+      console.log(cells[id]);
+      return
     }
 
-  // const xOrO = () => {
-  //   if(store.state.cells[] === 0) {
-  //     return false;
-  //   }
-  //   if (store.state.cells[] === 1) {
-  //     return '/X.svg';
-  //   }
+    store.commit('cellsChange', {id, value: store.state.flag})
+    store.commit('reFlag');
+    const winner = checkWinner(cells.value);
+    if (winner) {
+      alert(winner)
 
-  //   if (store.state.cells[] === 2) {
-  //     return '/O.svg';
-  //   }
-  //   else return false;
+    }
     
-  // }
+  }
 
-  let counter = ref(0);
-
-  const arrCount = ref([0]);
-  function getFlag () {
-    store.commit('reFlag')
+  function updateTable() {
+    store.commit('updateCells');
   }
 
 
+
+  function checkWinner(board) {
+  const winningCombos = [
+      [1,2,3],
+      [4,5,6],
+      [7,8,9],
+      [1,4,7],
+      [2,5,8],
+      [3,6,9],
+      [1,5,9],
+      [3,5,7],
+  ];
+  for (const combo of winningCombos) {
+    const [a, b, c] = combo;
+    if (board[a] !== 0 && board[a] === board[b] && board[a] === board[c]) {
+      return `победитель ${board[a]}`;
+    }
+  }
   
+  return 0;
+}
+
+
+
 
 </script>
 
 <style scoped>
+
+  .main {
+    width: 1200px;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+  }
+
   .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    margin-left: 150px;
+  }
+  .cell {
     width: 450px;
-    height: 300px;
     border: 1px solid black;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -87,4 +129,94 @@
   }
   
 
+  .players-name {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    /* width: 500px; */
+    justify-content: start;
+    gap: 10px;
+    padding-bottom: 30px;
+  }
+
+  .players-name__block {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    text-align: end;
+    gap: 10px;
+  }
+
+  
+
+  .players-name__input {
+    width: 120px;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgb(12, 10, 10);
+    box-sizing: border-box;
+    padding: 0;
+    text-align: center;
+ 
+  }
+
+  .players-name__input::placeholder {
+    background-color: yellow;
+  }
+
+
+  .update-btn {
+    margin-top: 10px;
+  }
+
+  .done { 
+    cursor: pointer;
+    padding-top: 3px;
+  }
+
+  .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
 </style>
