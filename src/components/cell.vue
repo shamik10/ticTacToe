@@ -7,8 +7,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, reactive} from 'vue';
-  import {useStore} from "vuex"
+
 
   const props = defineProps({
     id: Number,

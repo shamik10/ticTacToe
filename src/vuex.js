@@ -32,6 +32,9 @@ const store = createStore({
       state.cells[val.id] = val.value;
       
     },
+    updateFlag(state) {
+      state.flag = 1;
+    },
     updateCells(state) {
       state.cells = {
         1: 0,

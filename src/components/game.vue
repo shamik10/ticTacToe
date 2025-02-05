@@ -4,18 +4,20 @@
       <div class="players-name__block">
         <span class="players"> игрок1:</span> 
         <input v-model="names.player1" class="players-name__input" type="text">
-        <label class="switch">
+        <span> {{ names.plWinCount1 }} </span>
+        <!-- <label class="switch">
           <input type="checkbox">
           <span class="slider"></span>
-        </label>
+        </label> -->
       </div>
       <div class="players-name__block">
         <span class="players"> игрок2:</span> 
         <input v-model="names.player2" class="players-name__input" type="text">
-        <label class="switch">
+        <span> {{ names.plWinCount2 }} </span>
+        <!-- <label class="switch">
           <input type="checkbox">
           <span class="slider"></span>
-        </label>
+        </label> -->
       </div>
     </div>
     <div class="box">
@@ -28,7 +30,7 @@
         />
       </div>
       <div class="update-btn">
-        <button @click="updateTable">обновить таблицу</button>
+        <button class="btn" @click="updateTable">обновить таблицу</button>
       </div>
     </div>
   </div>
@@ -39,33 +41,33 @@
   import { ref, computed, reactive, watch, onMounted } from 'vue';
   import { useStore } from 'vuex';
 
- 
-
-  const x = ref([]);
-  const o = ref([]);
-
   const names = reactive({
     player1: '',
-    player2: ''
+    player2: '',
+    plWinCount1: 0,
+    plWinCount2: 0,
+
   });
+
   const store = useStore();
   const cells = computed(() => store.state.cells);
   
-
-
 
   function getId(id) {
     console.log(id);
     if (cells.value[id]) {
       console.log(cells[id]);
-      return
+      return;
     }
 
     store.commit('cellsChange', {id, value: store.state.flag})
     store.commit('reFlag');
     const winner = checkWinner(cells.value);
     if (winner) {
-      alert(winner)
+      setTimeout(
+        () => alert(winner),
+        100
+      )
 
     }
     
@@ -73,11 +75,12 @@
 
   function updateTable() {
     store.commit('updateCells');
+    store.commit('updateFlag');
   }
 
 
 
-  function checkWinner(board) {
+function checkWinner(board) {
   const winningCombos = [
       [1,2,3],
       [4,5,6],
@@ -91,7 +94,17 @@
   for (const combo of winningCombos) {
     const [a, b, c] = combo;
     if (board[a] !== 0 && board[a] === board[b] && board[a] === board[c]) {
-      return `победитель ${board[a]}`;
+      if(board[a] === 1) {
+        names.plWinCount1++;
+        return `Победитель ${names.player1}`;
+        
+
+      }
+      else if (board[a] === 2) {
+        names.plWinCount2++;
+        return `Победитель ${names.player2}`;
+      }
+      else return `Ничья!`
     }
   }
   
@@ -175,7 +188,16 @@
     padding-top: 3px;
   }
 
-  .switch {
+  .btn { 
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+     background-color: rgb(72, 72, 204);
+  }
+  /* .switch {
   position: relative;
   display: inline-block;
   width: 60px;
@@ -218,5 +240,5 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(26px);
-}
+} */
 </style>
