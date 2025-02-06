@@ -36,9 +36,18 @@
     border: 1px solid black;
     cursor: pointer;
     height: 128px;
+    /* width: 50px; */
+ 
+    
+  }
+
+  @media (max-width: 900px) {
+    .bord { 
+      height: 64px;
+    }
   }
  .tic {
-  width: 64px;
-  height: 64px;
+  width: 55px;
+  height: 55px;
  }
 </style>

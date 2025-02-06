@@ -1,5 +1,8 @@
 <template>
-  <game />
+  <div class="main">
+    <game />
+
+  </div>
 </template>
 
 
@@ -14,5 +17,9 @@ import { ref } from 'vue';
 
 
 <style scoped>
-
+  .main { 
+    
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
 </style>

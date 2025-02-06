@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="tictac">
     <div class="players-name">
       <div class="players-name__block">
         <span class="players"> игрок1:</span> 
@@ -20,17 +20,19 @@
         </label> -->
       </div>
     </div>
-    <div class="box">
-      <div class="cell" key="id">
-        <cell @click="getId"  v-for="number of Object.keys(cells)" 
-        :key="+number"
-        :id = "+number"
-        :value="cells[number]"
-        :players="names"
-        />
-      </div>
-      <div class="update-btn">
-        <button class="btn" @click="updateTable">обновить таблицу</button>
+    <div class="tictac-block">
+      <div class="box">
+        <div class="cell" key="id">
+          <cell @click="getId"  v-for="number of Object.keys(cells)" 
+          :key="+number"
+          :id = "+number"
+          :value="cells[number]"
+          :players="names"
+          />
+        </div>
+        <div class="update-btn">
+          <button class="btn" @click="updateTable">обновить таблицу</button>
+        </div>
       </div>
     </div>
   </div>
@@ -94,15 +96,21 @@ function checkWinner(board) {
   for (const combo of winningCombos) {
     const [a, b, c] = combo;
     if (board[a] !== 0 && board[a] === board[b] && board[a] === board[c]) {
-      if(board[a] === 1) {
+      if(board[a] === 1 && names.player1.length !== 0) {
         names.plWinCount1++;
         return `Победитель ${names.player1}`;
         
 
       }
-      else if (board[a] === 2) {
+      else if (board[a] === 2 && names.player2.length !== 0) {
         names.plWinCount2++;
         return `Победитель ${names.player2}`;
+      }
+      else if (board[a] === 1) {
+        return `Победитель Х`;
+      }
+      else if (board[a] === 2) {
+        return `Победитель О`;
       }
       else return `Ничья!`
     }
@@ -118,26 +126,37 @@ function checkWinner(board) {
 
 <style scoped>
 
-  .main {
+  .tictac {
+    padding: 0;
     width: 1200px;
     height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: start;
+    /* align-items: center; */
   }
 
-  .box {
+  .tictac-block { 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-self: center;
+  }
+
+  .box {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-left: 150px;
   }
   .cell {
     width: 450px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+
+    
 
   }
   
@@ -146,10 +165,13 @@ function checkWinner(board) {
     display: flex;
     flex-direction: column;
     height: 100px;
-    /* width: 500px; */
-    justify-content: start;
+    justify-content: center;
+    /* align-items: center; */
     gap: 10px;
     padding-bottom: 30px;
+    height: 100px;
+    padding-left: 20px;
+    /* width: 600px; */
   }
 
   .players-name__block {
@@ -196,6 +218,56 @@ function checkWinner(board) {
 
   .btn:hover {
      background-color: rgb(72, 72, 204);
+  }
+
+  @media (max-width: 900px) {
+    .cell {
+      width: 250px;
+      margin-right: 100px;
+    }
+
+    .update-btn { 
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn { 
+      padding: 8px;
+      font-size: 12px;
+      width: 125px;
+      margin-right: 100px;
+    }
+  }
+  @media (max-width: 600px) {
+    .cell {
+      width: 200px;
+    }
+    .box {
+      padding-right: 300px;
+      margin-left: 0;
+    }
+    .update-btn { 
+      display: flex;
+      justify-content: center;
+    }
+    .btn { 
+      padding: 4px;
+      font-size: 10px;
+      width: 125px;
+    }
+    /* .players-name { 
+      width: 100%;
+    } */
+  }
+
+  @media (max-width: 500px) {
+    .tictac { 
+      flex-direction: column;
+    }
+
+    .box { 
+      padding-right: 700px;
+    }
   }
   /* .switch {
   position: relative;
