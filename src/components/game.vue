@@ -162,6 +162,7 @@ function checkWinner(board) {
   
 
   .players-name {
+    background-color: white;
     display: flex;
     flex-direction: column;
     height: 100px;
@@ -211,6 +212,7 @@ function checkWinner(board) {
   }
 
   .btn { 
+    background-color: #fff;
     padding: 12px;
     border-radius: 6px;
     cursor: pointer;
