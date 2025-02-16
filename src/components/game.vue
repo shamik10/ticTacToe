@@ -4,7 +4,7 @@
       <div class="players-name__block">
         <span class="players"> игрок1:</span> 
         <input v-model="names.player1" class="players-name__input" type="text">
-        <span> {{ names.plWinCount1 }} </span>
+        <span class="counter"> {{ names.plWinCount1 }} </span>
         <!-- <label class="switch">
           <input type="checkbox">
           <span class="slider"></span>
@@ -13,7 +13,7 @@
       <div class="players-name__block">
         <span class="players"> игрок2:</span> 
         <input v-model="names.player2" class="players-name__input" type="text">
-        <span> {{ names.plWinCount2 }} </span>
+        <span class="counter"> {{ names.plWinCount2 }} </span>
         <!-- <label class="switch">
           <input type="checkbox">
           <span class="slider"></span>
@@ -160,6 +160,9 @@ function checkWinner(board) {
 
   }
   
+  .players-name {
+    color: #000000;
+  }
 
   .players-name {
     /* background-color: white; */
@@ -223,10 +226,10 @@ function checkWinner(board) {
 
   @media (prefers-color-scheme: dark) {
     body {
-        background-color: #ffffff; 
+        /* background-color: #ffffff;  */
         color: #000000; 
     }
-}
+  }
 
   @media (max-width: 900px) {
     .cell {
@@ -264,7 +267,7 @@ function checkWinner(board) {
       width: 125px;
     }
     .players-name__input { 
-      color: #000000;
+      color: #ffffff;
     }
 
   }
