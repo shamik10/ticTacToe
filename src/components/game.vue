@@ -222,6 +222,13 @@ function checkWinner(board) {
      background-color: rgb(72, 72, 204);
   }
 
+  @media (prefers-color-scheme: dark) {
+    body {
+        background-color: #ffffff; 
+        color: #000000; 
+    }
+}
+
   @media (max-width: 900px) {
     .cell {
       width: 250px;
@@ -257,9 +264,9 @@ function checkWinner(board) {
       font-size: 10px;
       width: 125px;
     }
-    /* .players-name { 
-      width: 100%;
-    } */
+    .players-name__input { 
+      background-color: #fff;
+    }
   }
 
   @media (max-width: 500px) {
