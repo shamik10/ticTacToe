@@ -267,7 +267,7 @@ function checkWinner(board) {
       width: 125px;
     }
     .players-name__input { 
-      color: #ffffff;
+      background-color: #ffffff;
     }
 
   }
