@@ -162,7 +162,7 @@ function checkWinner(board) {
   
 
   .players-name {
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     flex-direction: column;
     height: 100px;
@@ -191,7 +191,6 @@ function checkWinner(board) {
     border: none;
     outline: none;
     border-bottom: 1px solid rgb(12, 10, 10);
-    box-sizing: border-box;
     padding: 0;
     text-align: center;
  
@@ -265,8 +264,9 @@ function checkWinner(board) {
       width: 125px;
     }
     .players-name__input { 
-      background-color: #fff;
+      color: #000000;
     }
+
   }
 
   @media (max-width: 500px) {
