@@ -189,6 +189,7 @@ function checkWinner(board) {
   
 
   .players-name__input {
+    background-color: #ffffff;
     width: 120px;
     height: 30px;
     border: none;
@@ -214,7 +215,7 @@ function checkWinner(board) {
   }
 
   .btn { 
-    background-color: #fff;
+    background-color: #2b9946;
     padding: 12px;
     border-radius: 6px;
     cursor: pointer;
