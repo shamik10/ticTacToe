@@ -195,6 +195,7 @@ function checkWinner(board) {
     border: none;
     outline: none;
     border-bottom: 1px solid rgb(12, 10, 10);
+    color: #000000;
     padding: 0;
     text-align: center;
  
